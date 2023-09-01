@@ -242,9 +242,7 @@ const StepTopLayerCorners = () => (
         <Move move="R" />
         <Move move="U'" />
         <Move move="L" />
-        <Move move="U" />
-        <Move move="R'" />,<Move move="R" />
-        <Move move="U" />
+        <Move move="U2" />
         <Move move="R'" />
         <Move move="U" />
         <Move move="R" />
@@ -258,9 +256,7 @@ const StepTopLayerCorners = () => (
         <Move move="R" />
         <Move move="U'" />
         <Move move="L" />
-        <Move move="U" />
-        <Move move="R'" />,<Move move="R" />
-        <Move move="U" />
+        <Move move="U2" />
         <Move move="R'" />
         <Move move="U" />
         <Move move="R" />
