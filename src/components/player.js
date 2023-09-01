@@ -11,11 +11,17 @@ export const usePlayer = () => {
       window.removeEventListener('storage', onStorageChange);
     };
   }, []);
-  return player;
+  return {
+    player,
+    setPlayer: (formPlayer) => {
+      window.localStorage.setItem('player', formPlayer);
+      window.dispatchEvent(new Event('storage'));
+    },
+  };
 };
 
 const Player = () => {
-  const player = usePlayer();
+  const { player, setPlayer } = usePlayer();
   if (player) {
     return null;
   }
@@ -26,9 +32,8 @@ const Player = () => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const { player: formPlayer } = Object.fromEntries(formData);
-        if (formPlayer && typeof window !== 'undefined') {
-          window.localStorage.setItem('player', formPlayer);
-          window.dispatchEvent(new Event('storage'));
+        if (formPlayer) {
+          setPlayer(formPlayer);
         }
       }}
     >

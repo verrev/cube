@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from 'react';
 const useSteps = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [stepTimes, setStepTimes] = useState({});
-  const player = usePlayer();
+  const { player } = usePlayer();
   const onKeypress = useCallback(
     (e) => {
       if (e.code === 'Space') {
