@@ -30,10 +30,10 @@ const useSteps = () => {
           setCurrentStep(currentStep + 1);
         }
       }
-      if (e.code === 'KeyR') {
-        setCurrentStep(0);
-        setStepTimes({});
-      }
+      // if (e.code === 'KeyR') {
+      //   setCurrentStep(0);
+      //   setStepTimes({});
+      // }
     },
     [currentStep, stepTimes, player]
   );
