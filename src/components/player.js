@@ -27,8 +27,8 @@ const Player = () => {
         const formData = new FormData(e.target);
         const { player: formPlayer } = Object.fromEntries(formData);
         if (formPlayer) {
-          window.localStorage.setItem('player', formPlayer);
-          window.dispatchEvent(new Event('storage'));
+          window?.localStorage.setItem('player', formPlayer);
+          window?.dispatchEvent(new Event('storage'));
         }
       }}
     >
