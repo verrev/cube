@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 :root {
+  --color-primary: #fff;
+  --color-secondary: #000;
+}
+
+/* :root {
   --color-primary: #000;
   --color-secondary: #fff;
 }
@@ -12,7 +17,7 @@
     --color-primary: #fff;
     --color-secondary: #000;
   }
-}
+} */
 
 body {
   color: var(--color-primary);

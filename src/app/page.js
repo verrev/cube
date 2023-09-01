@@ -1,11 +1,14 @@
 'use client';
+import Player, { usePlayer } from '@/components/player';
 import Results from '@/components/results';
 import Steps from '@/components/steps';
+import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 
 const useSteps = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [stepTimes, setStepTimes] = useState({});
+  const player = usePlayer();
   const onKeypress = useCallback(
     (e) => {
       if (e.code === 'Space') {
@@ -14,14 +17,25 @@ const useSteps = () => {
         } else {
           setStepTimes({ ...stepTimes, [currentStep]: new Date() });
         }
-        setCurrentStep(currentStep > Steps.length - 1 ? 0 : currentStep + 1);
+        if (currentStep > Steps.length - 1) {
+          fetch('/api', {
+            method: 'POST',
+            body: JSON.stringify(stepTimes),
+            headers: {
+              'X-player': player,
+            },
+          });
+          setCurrentStep(0);
+        } else {
+          setCurrentStep(currentStep + 1);
+        }
       }
       if (e.code === 'KeyR') {
         setCurrentStep(0);
         setStepTimes({});
       }
     },
-    [currentStep, stepTimes]
+    [currentStep, stepTimes, player]
   );
   useEffect(() => {
     document.addEventListener('keypress', onKeypress);
@@ -32,10 +46,13 @@ const useSteps = () => {
   return { currentStep, stepTimes };
 };
 
-export default function Home() {
+const Home = () => {
   const { currentStep, stepTimes } = useSteps();
   return (
-    <main className="flex justify-center">
+    <main className="relative flex justify-center">
+      <Link href="/leaderboard" className="absolute font-mono text-xs right-2">
+        Leaderboard
+      </Link>
       <div className="w-full max-w-3xl p-4 md:p-16">
         <div className="mb-4">
           {Steps[currentStep]?.component() || (
@@ -43,7 +60,10 @@ export default function Home() {
           )}
         </div>
         <Results currentStep={currentStep} stepTimes={stepTimes} />
+        {currentStep === 0 && <Player />}
       </div>
     </main>
   );
-}
+};
+
+export default Home;
