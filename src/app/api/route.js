@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { kv } from '@vercel/kv';
 import getResults from '@/getResults';
+import Steps from '@/components/steps';
 
 export const GET = async (_) => {
   // const players = Object.keys((await kv.get('PLAYERS')) || {});
