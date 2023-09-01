@@ -1,21 +1,29 @@
 import { useEffect, useState } from 'react';
 
 export const usePlayer = () => {
-  const [player, setPlayer] = useState(window.localStorage.getItem('player'));
+  const [player, setPlayer] = useState(
+    typeof window !== 'undefined' && window.localStorage.getItem('player')
+  );
   useEffect(() => {
     const onStorageChange = () => {
-      setPlayer(window.localStorage.getItem('player'));
+      setPlayer(
+        typeof window !== 'undefined' && window.localStorage.getItem('player')
+      );
     };
-    window.addEventListener('storage', onStorageChange);
+    typeof window !== 'undefined' &&
+      window.addEventListener('storage', onStorageChange);
     return () => {
-      window.removeEventListener('storage', onStorageChange);
+      typeof window !== 'undefined' &&
+        window.removeEventListener('storage', onStorageChange);
     };
   }, []);
   return {
     player,
     setPlayer: (formPlayer) => {
-      window.localStorage.setItem('player', formPlayer);
-      window.dispatchEvent(new Event('storage'));
+      typeof window !== 'undefined' &&
+        window.localStorage.setItem('player', formPlayer);
+      typeof window !== 'undefined' &&
+        window.dispatchEvent(new Event('storage'));
     },
   };
 };
