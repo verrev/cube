@@ -1,3 +1,4 @@
+import SyntheticSpace from '@/components/syntheticSpace';
 import './globals.css';
 import { Inter } from 'next/font/google';
 
@@ -10,7 +11,10 @@ export const metadata = {
 
 const RootLayout = ({ children }) => (
   <html lang="en">
-    <body className={inter.className}>{children}</body>
+    <body className={`${inter.className} relative`}>
+      {children}
+      <SyntheticSpace />
+    </body>
   </html>
 );
 

@@ -45,7 +45,10 @@ const Player = () => {
         }
       }}
     >
-      <label for="player" className="flex items-center mr-2 text-sm font-bold">
+      <label
+        htmlFor="player"
+        className="flex items-center mr-2 text-sm font-bold"
+      >
         Player
       </label>
       <input
