@@ -28,7 +28,7 @@ const Leaderboard = async () => {
               <div className="font-bold text-right text-yellow-400">Time</div>
               {results.map((result) => (
                 <div key={result.id} className="text-right">
-                  {formatDuration({ seconds: Math.round(result.time / 1000) })}
+                  {result.time}
                 </div>
               ))}
             </div>

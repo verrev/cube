@@ -3,6 +3,10 @@ import { kv } from '@vercel/kv';
 import getResults from '@/getResults';
 
 export const GET = async (_) => {
+  // const players = Object.keys((await kv.get('PLAYERS')) || {});
+  // for (const player of players) {
+  //   await kv.del(player);
+  // }
   return NextResponse.json(await getResults());
 };
 
@@ -18,5 +22,5 @@ export const POST = async (request) => {
     ...((await kv.get(player)) || []),
     { stepTimes: body, attemptedAt: new Date() },
   ]);
-  return NextResponse.json({ response: 'body' });
+  return new NextResponse(null, { status: 200 });
 };
