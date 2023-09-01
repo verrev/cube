@@ -17,23 +17,10 @@ const useSteps = () => {
         } else {
           setStepTimes({ ...stepTimes, [currentStep]: new Date() });
         }
-        if (currentStep === Steps.length - 1) {
-          fetch('/api', {
-            method: 'POST',
-            body: JSON.stringify(stepTimes),
-            headers: {
-              'X-player': player,
-            },
-          });
-        }
         setCurrentStep(currentStep > Steps.length - 1 ? 0 : currentStep + 1);
       }
-      // if (e.code === 'KeyR') {
-      //   setCurrentStep(0);
-      //   setStepTimes({});
-      // }
     },
-    [currentStep, stepTimes, player]
+    [currentStep, stepTimes]
   );
   useEffect(() => {
     document.addEventListener('keypress', onKeypress);
@@ -41,6 +28,17 @@ const useSteps = () => {
       document.removeEventListener('keypress', onKeypress);
     };
   }, [onKeypress]);
+  useEffect(() => {
+    if (Object.keys(stepTimes).length === Steps.length) {
+      fetch('/api', {
+        method: 'POST',
+        body: JSON.stringify(stepTimes),
+        headers: {
+          'X-player': player,
+        },
+      });
+    }
+  }, [stepTimes, player]);
   return { currentStep, stepTimes };
 };
 

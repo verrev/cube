@@ -18,9 +18,16 @@ export const POST = async (request) => {
   const player = rawPlayer.slice(0, 15);
   kv.set('PLAYERS', { ...((await kv.get('PLAYERS')) || {}), [player]: true });
   const body = await request.json();
-  kv.set(player, [
-    ...((await kv.get(player)) || []),
-    { stepTimes: body, attemptedAt: new Date() },
-  ]);
+  if (
+    new Date(body[Steps.length - 1]).getTime() - new Date(body[0]).getTime() >
+    2000
+  ) {
+    kv.set(player, [
+      ...((await kv.get(player)) || []),
+      { stepTimes: body, attemptedAt: new Date() },
+    ]);
+  } else {
+    console.log('Will not save SUS attempt', { body, player });
+  }
   return new NextResponse(null, { status: 200 });
 };
