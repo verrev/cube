@@ -25,21 +25,24 @@ const getResults = async () => {
   rawResults.filter(Boolean).forEach((result) => {
     const { player, ...solves } = result;
     for (const solve in solves) {
+      const start = new Date(solves[solve].stepTimes[Steps.length - 1]);
+      const end = new Date(solves[solve].stepTimes[0]);
       results.push({
         id: uuidv4(),
         player,
         time: formatDuration(
           intervalToDuration({
-            start: new Date(solves[solve].stepTimes[Steps.length - 1]),
-            end: new Date(solves[solve].stepTimes[0]),
+            start,
+            end,
           })
         ),
+        timeInMs: start.getTime() - end.getTime(),
         attemptedAt: solves[solve].attemptedAt,
       });
     }
   });
 
-  return results.sort((a, b) => a.time - b.time);
+  return results.sort((a, b) => a.timeInMs - b.timeInMs);
 };
 
 export default getResults;
