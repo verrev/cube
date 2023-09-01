@@ -17,7 +17,7 @@ const useSteps = () => {
         } else {
           setStepTimes({ ...stepTimes, [currentStep]: new Date() });
         }
-        if (currentStep > Steps.length - 1) {
+        if (currentStep === Steps.length - 1) {
           fetch('/api', {
             method: 'POST',
             body: JSON.stringify(stepTimes),
@@ -25,10 +25,8 @@ const useSteps = () => {
               'X-player': player,
             },
           });
-          setCurrentStep(0);
-        } else {
-          setCurrentStep(currentStep + 1);
         }
+        setCurrentStep(currentStep > Steps.length - 1 ? 0 : currentStep + 1);
       }
       // if (e.code === 'KeyR') {
       //   setCurrentStep(0);
