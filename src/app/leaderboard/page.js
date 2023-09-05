@@ -7,13 +7,13 @@ import Link from 'next/link';
 const Leaderboard = async () => {
   const results = await getResults();
   return (
-    <main className="flex justify-center">
-      <Link href="/" className="absolute font-mono text-xs right-2">
+    <main className="flex justify-center font-mono text-xs">
+      <Link href="/" className="absolute text-xs right-2">
         Home
       </Link>
       <div className="w-full max-w-3xl p-4 md:p-16">
         <div className="mb-4">
-          <div className="flex justify-between text-lg">
+          <div className="flex justify-between">
             <div>
               <div className="font-bold text-yellow-400">Player</div>
               {results.map((result, i) => (

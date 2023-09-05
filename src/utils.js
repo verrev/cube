@@ -10,3 +10,21 @@ export const stringToColour = (string) => {
   }
   return colour;
 };
+
+export const getKey = (key) =>
+  fetch(`https://l8.ee/xxx?key=${key}`, {
+    headers: {
+      'X-api-key': process.env.KV_API_KEY,
+      'Content-type': 'application/json',
+    },
+  }).then((res) => res.json());
+
+export const setKey = (key, value) =>
+  fetch(`https://l8.ee/xxx?key=${key}`, {
+    method: 'post',
+    headers: {
+      'X-api-key': process.env.KV_API_KEY,
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify(value),
+  });

@@ -1,12 +1,10 @@
 import { NextResponse } from 'next/server';
-import { kv } from '@vercel/kv';
 import getResults from '@/getResults';
 import { Steps } from '@/components';
 import crypto from 'crypto';
+import { getKey, setKey } from '@/utils';
 
-export const GET = async (_) => {
-  return NextResponse.json(await getResults());
-};
+export const GET = (_) => getResults();
 
 export const DELETE = async (request) => {
   try {
@@ -20,10 +18,10 @@ export const DELETE = async (request) => {
     }
 
     const { player, resultId } = await request.json();
-    const results = await kv.get(player);
+    const results = await getKey(player);
     const newResults = results.filter((result) => result.id !== resultId);
     if (results.length !== newResults.length) {
-      await kv.set(player, newResults);
+      await setKey(player, newResults);
       return new NextResponse(null, { status: 200 });
     }
   } catch (e) {
@@ -38,14 +36,14 @@ export const POST = async (request) => {
     return new NextResponse(null, { status: 400 });
   }
   const player = rawPlayer.slice(0, 15);
-  kv.set('PLAYERS', { ...((await kv.get('PLAYERS')) || {}), [player]: true });
+  setKey('PLAYERS', { ...((await getKey('PLAYERS')) || {}), [player]: true });
   const body = await request.json();
   if (
     new Date(body[Steps.length - 1]).getTime() - new Date(body[0]).getTime() >
     3333
   ) {
-    kv.set(player, [
-      ...((await kv.get(player)) || []),
+    setKey(player, [
+      ...((await getKey(player)) || []),
       { stepTimes: body, attemptedAt: new Date() },
     ]);
   } else {

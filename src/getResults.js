@@ -1,16 +1,25 @@
-import { kv } from '@vercel/kv';
 import { Steps } from '@/components';
 import { formatDuration, intervalToDuration } from 'date-fns';
+import { getKey, setKey } from '@/utils';
+
+const formatDistanceLocale = {
+  xSeconds: '{{count}}s',
+  xMinutes: '{{count}}m',
+};
+
+const formatDurationLocale = {
+  formatDistance: (token, count) =>
+    formatDistanceLocale[token].replace('{{count}}', count),
+};
 
 const getResults = async () => {
-  const players = Object.keys((await kv.get('PLAYERS')) || {});
-
+  const players = Object.keys((await getKey('PLAYERS')) || {});
   const resultsPromises = [];
   for (const player of players) {
     resultsPromises.push(
       new Promise(async (resolve, reject) => {
         try {
-          resolve({ player, ...(await kv.get(player)) });
+          resolve({ player, ...(await getKey(player)) });
         } catch (e) {
           console.log(e);
           reject(null);
@@ -19,7 +28,6 @@ const getResults = async () => {
     );
   }
   const rawResults = await Promise.all(resultsPromises);
-
   const results = [];
   rawResults.filter(Boolean).forEach((result) => {
     const { player, ...solves } = result;
@@ -33,14 +41,17 @@ const getResults = async () => {
           intervalToDuration({
             start,
             end,
-          })
+          }),
+          {
+            format: ['minutes', 'seconds'],
+            locale: formatDurationLocale,
+          }
         ),
         timeInMs: start.getTime() - end.getTime(),
         attemptedAt: solves[solve].attemptedAt,
       });
     }
   });
-
   return results.sort((a, b) => a.timeInMs - b.timeInMs);
 };
 
