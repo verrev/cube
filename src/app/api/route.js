@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { kv } from '@vercel/kv';
 import getResults from '@/getResults';
-import Steps from '@/components/steps';
+import { Steps } from '@/components';
 import crypto from 'crypto';
 
 export const GET = async (_) => {

@@ -1,5 +1,5 @@
 'use client';
-import { usePlayer } from '@/components/player';
+import { usePlayer } from '@/components';
 import { stringToColour } from '@/utils';
 
 const ResultTime = ({ result }) => {

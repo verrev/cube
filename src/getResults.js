@@ -1,5 +1,5 @@
 import { kv } from '@vercel/kv';
-import Steps from '@/components/steps';
+import { Steps } from '@/components';
 import { formatDuration, intervalToDuration } from 'date-fns';
 
 const getResults = async () => {

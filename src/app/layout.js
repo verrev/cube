@@ -1,5 +1,5 @@
 import { Inter } from 'next/font/google';
-import SyntheticSpace from '@/components/syntheticSpace';
+import { SyntheticSpace } from '@/components';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -10,7 +10,7 @@ export const metadata = {
 };
 
 const RootLayout = ({ children }) => (
-  <html lang="en">
+  <html lang="en" className="h-full">
     <head>
       <meta
         name="viewport"
@@ -18,7 +18,7 @@ const RootLayout = ({ children }) => (
       />
       <link rel="icon" href="/favicon.png" sizes="any" />
     </head>
-    <body className={`${inter.className} relative`}>
+    <body className={`${inter.className} relative h-full`}>
       {children}
       <SyntheticSpace />
     </body>

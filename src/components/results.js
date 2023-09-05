@@ -1,4 +1,4 @@
-import Steps from '@/components/steps';
+import { Steps } from '@/components';
 import {
   differenceInSeconds,
   formatDuration,
