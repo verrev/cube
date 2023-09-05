@@ -25,14 +25,6 @@ const Leaderboard = async () => {
                   </b>
                 </div>
               ))}
-              {results.map((result, i) => (
-                <div key={result.id}>
-                  {i + 1}.{' '}
-                  <b style={{ color: stringToColour(result.player) }}>
-                    {result.player}
-                  </b>
-                </div>
-              ))}
             </div>
             <div>
               <div className="font-bold text-center text-yellow-400">
