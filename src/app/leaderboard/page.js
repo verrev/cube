@@ -1,5 +1,6 @@
+import ResultTime from '@/components/resultTime';
 import getResults from '@/getResults';
-import { format, formatDuration } from 'date-fns';
+import { format } from 'date-fns';
 
 const Leaderboard = async () => {
   const results = await getResults();
@@ -27,9 +28,7 @@ const Leaderboard = async () => {
             <div>
               <div className="font-bold text-right text-yellow-400">Time</div>
               {results.map((result) => (
-                <div key={result.id} className="text-right">
-                  {result.time}
-                </div>
+                <ResultTime key={result.id} result={result} />
               ))}
             </div>
           </div>

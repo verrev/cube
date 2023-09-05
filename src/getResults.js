@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { kv } from '@vercel/kv';
 import Steps from '@/components/steps';
 import { formatDuration, intervalToDuration } from 'date-fns';
@@ -28,7 +27,7 @@ const getResults = async () => {
       const start = new Date(solves[solve].stepTimes[Steps.length - 1]);
       const end = new Date(solves[solve].stepTimes[0]);
       results.push({
-        id: uuidv4(),
+        id: solves[solve].id,
         player,
         time: formatDuration(
           intervalToDuration({
