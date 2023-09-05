@@ -4,7 +4,9 @@ import { Steps } from '@/components';
 import crypto from 'crypto';
 import { getKey, setKey } from '@/utils';
 
-export const GET = (_) => getResults();
+export const GET = async (_) => {
+  return NextResponse.json(await getResults());
+};
 
 export const DELETE = async (request) => {
   try {
@@ -43,7 +45,7 @@ export const POST = async (request) => {
   const body = await request.json();
   if (
     new Date(body[Steps.length - 1]).getTime() - new Date(body[0]).getTime() >
-    3333
+    9999
   ) {
     await setKey(player, [
       ...((await getKey(player)) || []),
