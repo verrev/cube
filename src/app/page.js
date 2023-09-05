@@ -19,6 +19,10 @@ const useSteps = () => {
         }
         setCurrentStep(currentStep > Steps.length - 1 ? 0 : currentStep + 1);
       }
+      if (e.code === 'KeyR' && currentStep > 0) {
+        setCurrentStep(0);
+        setStepTimes({});
+      }
     },
     [currentStep, stepTimes]
   );
