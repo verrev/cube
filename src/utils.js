@@ -17,6 +17,7 @@ export const getKey = (key) =>
       'X-api-key': process.env.KV_API_KEY,
       'Content-type': 'application/json',
     },
+    cache: 'no-store',
   }).then((res) => res.json());
 
 export const setKey = (key, value) =>
@@ -27,4 +28,5 @@ export const setKey = (key, value) =>
       'Content-type': 'application/json',
     },
     body: JSON.stringify(value),
+    cache: 'no-store',
   });
