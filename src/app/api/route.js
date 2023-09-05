@@ -36,13 +36,16 @@ export const POST = async (request) => {
     return new NextResponse(null, { status: 400 });
   }
   const player = rawPlayer.slice(0, 15);
-  setKey('PLAYERS', { ...((await getKey('PLAYERS')) || {}), [player]: true });
+  await setKey('PLAYERS', {
+    ...((await getKey('PLAYERS')) || {}),
+    [player]: true,
+  });
   const body = await request.json();
   if (
     new Date(body[Steps.length - 1]).getTime() - new Date(body[0]).getTime() >
     3333
   ) {
-    setKey(player, [
+    await setKey(player, [
       ...((await getKey(player)) || []),
       { stepTimes: body, attemptedAt: new Date() },
     ]);
