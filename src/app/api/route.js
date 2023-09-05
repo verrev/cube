@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import getResults from '@/getResults';
 import { Steps } from '@/components';
 import crypto from 'crypto';
+import { v4 as uuidv4 } from 'uuid';
 import { getKey, setKey } from '@/utils';
 
 export const GET = async (_) => {
@@ -49,7 +50,7 @@ export const POST = async (request) => {
   ) {
     await setKey(player, [
       ...((await getKey(player)) || []),
-      { stepTimes: body, attemptedAt: new Date() },
+      { id: uuidv4(), stepTimes: body, attemptedAt: new Date() },
     ]);
   } else {
     console.log('Will not save SUS attempt', { body, player });
