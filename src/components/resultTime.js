@@ -1,10 +1,14 @@
 'use client';
 import { usePlayer } from '@/components/player';
+import { stringToColour } from '@/utils';
 
 const ResultTime = ({ result }) => {
   const { player } = usePlayer();
   return (
-    <div className="text-right">
+    <div
+      className="text-right"
+      style={{ color: stringToColour(result.player) }}
+    >
       {result.time}
       {player === 'rahamees' && (
         <button

@@ -1,6 +1,7 @@
 import ResultTime from '@/components/resultTime';
 import getResults from '@/getResults';
-import { format } from 'date-fns';
+import { stringToColour } from '@/utils';
+import { formatInTimeZone } from 'date-fns-tz';
 
 const Leaderboard = async () => {
   const results = await getResults();
@@ -11,8 +12,13 @@ const Leaderboard = async () => {
           <div className="flex justify-between text-lg">
             <div>
               <div className="font-bold text-yellow-400">Player</div>
-              {results.map((result) => (
-                <div key={result.id}>{result.player}</div>
+              {results.map((result, i) => (
+                <div key={result.id}>
+                  {i + 1}.{' '}
+                  <b style={{ color: stringToColour(result.player) }}>
+                    {result.player}
+                  </b>
+                </div>
               ))}
             </div>
             <div>
@@ -20,8 +26,16 @@ const Leaderboard = async () => {
                 Attempted at
               </div>
               {results.map((result) => (
-                <div key={result.id} className="text-center">
-                  {format(new Date(result.attemptedAt), 'dd.MM.yy HH:mm')}
+                <div
+                  key={result.id}
+                  className="text-center"
+                  style={{ color: stringToColour(result.player) }}
+                >
+                  {formatInTimeZone(
+                    result.attemptedAt,
+                    'Europe/Tallinn',
+                    'dd.MM.yy HH:mm'
+                  )}
                 </div>
               ))}
             </div>
