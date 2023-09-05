@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 const Leaderboard = async () => {
   const results = await getResults();
+  console.log(results);
   return (
     <main className="flex justify-center font-mono text-xs">
       <Link href="/" className="absolute text-xs right-2">
