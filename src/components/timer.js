@@ -1,6 +1,6 @@
 'use client';
-import { formatDuration, intervalToDuration } from 'date-fns';
 import { useEffect, useState } from 'react';
+import { formatDuration, intervalToDuration } from 'date-fns';
 
 const Timer = ({ startTime }) => {
   const [currentTime, setCurrentTime] = useState(startTime);

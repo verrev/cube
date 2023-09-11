@@ -1,8 +1,8 @@
+import { formatInTimeZone } from 'date-fns-tz';
+import Link from 'next/link';
 import { ResultTime } from '@/components';
 import getResults from '@/getResults';
 import { stringToColour } from '@/utils';
-import { formatInTimeZone } from 'date-fns-tz';
-import Link from 'next/link';
 
 const Leaderboard = async () => {
   const results = await getResults();

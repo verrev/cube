@@ -1,5 +1,5 @@
-import { Steps } from '@/components';
 import { formatDuration, intervalToDuration } from 'date-fns';
+import { Steps } from '@/components';
 import { getKey } from '@/utils';
 
 const formatDistanceLocale = {
@@ -14,7 +14,6 @@ const formatDurationLocale = {
 
 const getResults = async () => {
   const players = Object.keys((await getKey('PLAYERS')) || {});
-  console.log('Got players', players);
   const resultsPromises = [];
   for (const player of players) {
     resultsPromises.push(
@@ -29,7 +28,6 @@ const getResults = async () => {
     );
   }
   const rawResults = await Promise.all(resultsPromises);
-  console.log('Got results', rawResults);
   const results = [];
   rawResults.filter(Boolean).forEach((result) => {
     const { player, ...solves } = result;

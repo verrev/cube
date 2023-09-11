@@ -1,9 +1,9 @@
-import { Steps } from '@/components';
 import {
   differenceInSeconds,
   formatDuration,
   intervalToDuration,
 } from 'date-fns';
+import { Steps } from '@/components';
 
 const STEP_COLORS = [
   'text-red-200',

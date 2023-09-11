@@ -1,64 +1,47 @@
 'use client';
-import { useEffect, useState } from 'react';
-
-export const usePlayer = () => {
-  const [player, setPlayer] = useState(
-    typeof window !== 'undefined' && window.localStorage.getItem('player')
-  );
-  useEffect(() => {
-    const onStorageChange = () => {
-      setPlayer(
-        typeof window !== 'undefined' && window.localStorage.getItem('player')
-      );
-    };
-    typeof window !== 'undefined' &&
-      window.addEventListener('storage', onStorageChange);
-    return () => {
-      typeof window !== 'undefined' &&
-        window.removeEventListener('storage', onStorageChange);
-    };
-  }, []);
-  return {
-    player,
-    setPlayer: (formPlayer) => {
-      typeof window !== 'undefined' &&
-        window.localStorage.setItem('player', formPlayer);
-      typeof window !== 'undefined' &&
-        window.dispatchEvent(new Event('storage'));
-    },
-  };
-};
+import { getPlayer } from '@/utils';
+import { useState } from 'react';
 
 const Player = () => {
-  const { player, setPlayer } = usePlayer();
-  if (player) {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const player = getPlayer();
+  if (player || isSubmitted) {
     return null;
   }
   return (
     <form
-      className="flex mt-16"
+      className="flex flex-col mt-16"
       onSubmit={(e) => {
         e.preventDefault();
-        const formData = new FormData(e.target);
-        const { player: formPlayer } = Object.fromEntries(formData);
-        if (formPlayer) {
-          setPlayer(formPlayer);
-        }
+        fetch('/api/login', {
+          method: 'PUT',
+          body: JSON.stringify(Object.fromEntries(new FormData(e.target))),
+          cache: 'no-store',
+        }).then((res) => {
+          if (res.status < 400) {
+            setIsSubmitted(true);
+          }
+        });
       }}
     >
-      <label
-        htmlFor="player"
-        className="flex items-center mr-2 text-sm font-bold"
-      >
+      <label htmlFor="player" className="flex items-center text-sm font-bold">
         Player
       </label>
       <input
         name="player"
         type="text"
-        className="h-8 p-2 mr-2 rounded-md bg-slate-100 text-slate-900"
+        className="h-8 p-2 rounded-md bg-slate-200 text-slate-900"
         maxLength={15}
-      ></input>
-      <button className="h-8 p-2 text-sm font-bold rounded-md bg-slate-100 text-slate-900">
+      />
+      <label htmlFor="email" className="flex items-center text-sm font-bold">
+        Email
+      </label>
+      <input
+        name="email"
+        type="email"
+        className="h-8 p-2 rounded-md bg-slate-200 text-slate-900"
+      />
+      <button className="h-10 p-2 mt-8 text-sm font-bold rounded-md bg-slate-200 text-slate-900">
         Save
       </button>
     </form>

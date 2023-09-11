@@ -1,12 +1,13 @@
 'use client';
-import { Player, usePlayer, Results, Steps, Timer } from '@/components';
-import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
+import { Player, Results, Steps, Timer } from '@/components';
+import { getPlayer } from '@/utils';
 
 const useSteps = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [stepTimes, setStepTimes] = useState({});
-  const { player } = usePlayer();
+  const player = getPlayer();
   const onKeypress = useCallback(
     (e) => {
       if (e.code === 'Space') {
@@ -35,9 +36,7 @@ const useSteps = () => {
       fetch('/api', {
         method: 'POST',
         body: JSON.stringify(stepTimes),
-        headers: {
-          'X-player': player,
-        },
+        cache: 'no-store',
       });
     }
   }, [stepTimes, player]);
