@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
+import bcrypt from 'bcrypt';
 
 import { getKey, setKey } from '@/utils';
 import { KvKey } from '@/app/api/route';
@@ -87,14 +88,22 @@ export const PUT = async (req) => {
   }
 
   const alreadyRegisteredPlayerEmail = (await getKey(KvKey.PLAYERS))[player];
-  console.log(alreadyRegisteredPlayerEmail);
-  if (alreadyRegisteredPlayerEmail && alreadyRegisteredPlayerEmail !== email) {
+  if (
+    alreadyRegisteredPlayerEmail &&
+    !(await bcrypt.compare(email, alreadyRegisteredPlayerEmail))
+  ) {
+    console.log(
+      `Attempted login from mismatching email ${email} !== ${alreadyRegisteredPlayerEmail} for player ${player}`
+    );
     return new NextResponse(null, { status: 400 });
   }
   if (!alreadyRegisteredPlayerEmail) {
     await setKey(KvKey.PLAYERS, {
       ...((await getKey(KvKey.PLAYERS)) || {}),
-      [player]: email,
+      [player]: await bcrypt.hash(
+        email,
+        parseInt(process.env.EMAIL_HASH_ROUND_COUNT)
+      ),
     });
   }
 
