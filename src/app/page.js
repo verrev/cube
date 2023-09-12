@@ -23,7 +23,7 @@ const useSteps = () => {
         setStepTimes({});
       }
     },
-    [currentStep, stepTimes]
+    [currentStep, stepTimes],
   );
   useEffect(() => {
     document.addEventListener('keypress', onKeypress);
@@ -48,11 +48,17 @@ const Home = () => {
   return (
     <>
       <main className="relative flex justify-center">
+        <Link href="/cheats" className="absolute font-mono text-xs right-28">
+          Cheats
+        </Link>
         <Link
           href="/leaderboard"
           className="absolute font-mono text-xs right-2"
         >
           Leaderboard
+        </Link>
+        <Link href="/scramble" className="absolute text-xs">
+          Scramble
         </Link>
         <div className="w-full max-w-3xl p-4 md:p-16">
           <div className="mb-4">
