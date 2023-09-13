@@ -4,11 +4,11 @@ const StepStart = () => (
   </p>
 );
 
-const Sticker = ({ color }) => (
+export const Sticker = ({ color }) => (
   <div className={`w-[16px] h-[16px] inline-block mx-1 ${color}`}></div>
 );
 
-const Move = ({ move }) => (
+export const Move = ({ move }) => (
   <div className="inline-block p-1 font-bold rounded-md bg-slate-200 text-slate-800 w-[32px] h-[32px] font-mono text-center align-middle mx-1">
     {move}
   </div>
@@ -191,7 +191,8 @@ const StepYellowCross = () => (
         <Move move="F'" />
       </li>
       <li className="mt-1">
-        9 and 12 of <Sticker color="bg-yellow-400" /> <Move move="F" />
+        Line of <Sticker color="bg-yellow-400" /> place the line front to back 9
+        and 12 of <Sticker color="bg-yellow-400" /> <Move move="F" />
         <Move move="U" />
         <Move move="R" />
         <Move move="U'" />
@@ -209,9 +210,7 @@ const StepYellowFace = () => (
       <li>
         No fish: ensure left face has <Sticker color="bg-yellow-400" /> on top
         right corner
-        <Move move="R" />
-        <Move move="U" />
-        <Move move="R'" />
+        <Move move="RT" />
         <Move move="U" />
         <Move move="R" />
         <Move move="U2" />
@@ -219,9 +218,7 @@ const StepYellowFace = () => (
       </li>
       <li>
         Fish: ensure nose is in left bottom corner
-        <Move move="R" />
-        <Move move="U" />
-        <Move move="R'" />
+        <Move move="RT" />
         <Move move="U" />
         <Move move="R" />
         <Move move="U2" />
